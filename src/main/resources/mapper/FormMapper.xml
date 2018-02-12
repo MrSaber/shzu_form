@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shzu.shzu.mapper.FormMapper">
+    <insert id="add" parameterType="com.shzu.shzu.model.Form" useGeneratedKeys="true" keyProperty="form_id">
+        INSERT INTO `shzu`.`shzu_form` (`form_date`, `form_user_id`, `form_expert_id`,`form_depart_id`,`form_office_id`,`form_cp_id`,`f_1_1`, `f_1_2`, `f_1_3`, `f_1_4`, `f_2_1`, `f_2_2`, `f_2_3`, `f_2_4`, `f_3_1`, `f_3_2`, `f_3_3`, `f_3_4`, `f_3_5`, `f_3_6`, `f_3_7`, `f_4_1`, `f_4_2`, `f_4_3`, `f_4_4`, `f_4_5`, `f_5_1`, `f_5_2`, `f_5_3`, `f_5_4`, `f_5_5`, `f_5_6`, `f_5_7`, `f_6_1`, `f_6_2`, `f_6_3`, `f_6_4`, `f_6_5`, `f_6_6`, `f_7_1`, `f_7_2`, `f_7_3`, `f_7_4`, `f_7_5`, `f_7_6`, `f_8_1`, `f_8_2`, `f_8_3`, `f_9_1`, `f_9_2`, `f_9_3`, `f_10_1`, `f_10_2`, `f_11_1`, `f_11_2`, `f_12_1`, `f_13_1`)
+        VALUES (CURDATE(), #{form_user_id},#{form_expert_id},#{form_depart_id}, #{form_office_id},#{form_cp_id},#{f_1_1}, #{f_1_2}, #{f_1_3}, #{f_1_4}, #{f_2_1}, #{f_2_2}, #{f_2_3}, #{f_2_4}, #{f_3_1}, #{f_3_2}, #{f_3_3}, #{f_3_4}, #{f_3_5}, #{f_3_6}, #{f_3_7}, #{f_4_1}, #{f_4_2}, #{f_4_3}, #{f_4_4}, #{f_4_5}, #{f_5_1}, #{f_5_2}, #{f_5_3}, #{f_5_4}, #{f_5_5}, #{f_5_6}, #{f_5_7}, #{f_6_1}, #{f_6_2}, #{f_6_3}, #{f_6_4}, #{f_6_5}, #{f_6_6}, #{f_7_1}, #{f_7_2}, #{f_7_3}, #{f_7_4}, #{f_7_5}, #{f_7_5}, #{f_8_1}, #{f_8_2}, #{f_8_3}, #{f_9_1}, #{f_9_2}, #{f_9_3}, #{f_10_1}, #{f_10_2}, #{f_11_1}, #{f_11_2}, #{f_12_1}, #{f_13_1})
+    </insert>
+
+    <insert id="save" parameterType="com.shzu.shzu.model.Form" useGeneratedKeys="true" keyProperty="form_id">
+        INSERT INTO `shzu`.`shzu_temp` (`form_date`, `form_user_id`, `form_expert_id`,`form_depart_id`,`form_office_id`,`form_cp_id`,`f_1_1`, `f_1_2`, `f_1_3`, `f_1_4`, `f_2_1`, `f_2_2`, `f_2_3`, `f_2_4`, `f_3_1`, `f_3_2`, `f_3_3`, `f_3_4`, `f_3_5`, `f_3_6`, `f_3_7`, `f_4_1`, `f_4_2`, `f_4_3`, `f_4_4`, `f_4_5`, `f_5_1`, `f_5_2`, `f_5_3`, `f_5_4`, `f_5_5`, `f_5_6`, `f_5_7`, `f_6_1`, `f_6_2`, `f_6_3`, `f_6_4`, `f_6_5`, `f_6_6`, `f_7_1`, `f_7_2`, `f_7_3`, `f_7_4`, `f_7_5`, `f_7_6`, `f_8_1`, `f_8_2`, `f_8_3`, `f_9_1`, `f_9_2`, `f_9_3`, `f_10_1`, `f_10_2`, `f_11_1`, `f_11_2`, `f_12_1`, `f_13_1`)
+        VALUES (CURDATE(), #{form_user_id},#{form_expert_id},#{form_depart_id}, #{form_office_id},#{form_cp_id},#{f_1_1}, #{f_1_2}, #{f_1_3}, #{f_1_4}, #{f_2_1}, #{f_2_2}, #{f_2_3}, #{f_2_4}, #{f_3_1}, #{f_3_2}, #{f_3_3}, #{f_3_4}, #{f_3_5}, #{f_3_6}, #{f_3_7}, #{f_4_1}, #{f_4_2}, #{f_4_3}, #{f_4_4}, #{f_4_5}, #{f_5_1}, #{f_5_2}, #{f_5_3}, #{f_5_4}, #{f_5_5}, #{f_5_6}, #{f_5_7}, #{f_6_1}, #{f_6_2}, #{f_6_3}, #{f_6_4}, #{f_6_5}, #{f_6_6}, #{f_7_1}, #{f_7_2}, #{f_7_3}, #{f_7_4}, #{f_7_5}, #{f_7_5}, #{f_8_1}, #{f_8_2}, #{f_8_3}, #{f_9_1}, #{f_9_2}, #{f_9_3}, #{f_10_1}, #{f_10_2}, #{f_11_1}, #{f_11_2}, #{f_12_1}, #{f_13_1})
+    </insert>
+
+    <select id="getcpBM" parameterType="int" resultType="com.shzu.shzu.model.Form">
+        SELECT
+    SUM(`f_1_1`) AS `f_1_1`,
+    SUM(`f_1_2`) AS `f_1_2`,
+    SUM(`f_1_3`) AS `f_1_3`,
+    SUM(`f_1_4`) AS `f_1_4`,
+    SUM(`f_2_1`) AS `f_2_1`,
+    SUM(`f_2_2`) AS `f_2_2`,
+    SUM(`f_2_3`) AS `f_2_3`,
+    SUM(`f_2_4`) AS `f_2_4`,
+    SUM(`f_3_1`) AS `f_3_1`,
+    SUM(`f_3_2`) AS `f_3_2`,
+    SUM(`f_3_3`) AS `f_3_3`,
+    SUM(`f_3_4`) AS `f_3_4`,
+    SUM(`f_3_5`) AS `f_3_5`,
+    SUM(`f_3_6`) AS `f_3_6`,
+    SUM(`f_3_7`) AS `f_3_7`,
+    SUM(`f_4_1`) AS `f_4_1`,
+    SUM(`f_4_2`) AS `f_4_2`,
+    SUM(`f_4_3`) AS `f_4_3`,
+    SUM(`f_4_4`) AS `f_4_4`,
+    SUM(`f_4_5`) AS `f_4_5`,
+    SUM(`f_5_1`) AS `f_5_1`,
+    SUM(`f_5_2`) AS `f_5_2`,
+    SUM(`f_5_3`) AS `f_5_3`,
+    SUM(`f_5_4`) AS `f_5_4`,
+    SUM(`f_5_5`) AS `f_5_5`,
+    SUM(`f_5_6`) AS `f_5_6`,
+    SUM(`f_5_7`) AS `f_5_7`,
+    SUM(`f_6_1`) AS `f_6_1`,
+    SUM(`f_6_2`) AS `f_6_2`,
+    SUM(`f_6_3`) AS `f_6_3`,
+    SUM(`f_6_4`) AS `f_6_4`,
+    SUM(`f_6_5`) AS `f_6_5`,
+    SUM(`f_6_6`) AS `f_6_6`,
+    SUM(`f_7_1`) AS `f_7_1`,
+    SUM(`f_7_2`) AS `f_7_2`,
+    SUM(`f_7_3`) AS `f_7_3`,
+    SUM(`f_7_4`) AS `f_7_4`,
+    SUM(`f_7_5`) AS `f_7_5`,
+    SUM(`f_7_6`) AS `f_7_6`,
+    SUM(`f_8_1`) AS `f_8_1`,
+    SUM(`f_8_2`) AS `f_8_2`,
+    SUM(`f_8_3`) AS `f_8_3`,
+    SUM(`f_9_1`) AS `f_9_1`,
+    SUM(`f_9_2`) AS `f_9_2`,
+    SUM(`f_9_3`) AS `f_9_3`,
+    SUM(`f_10_1`) AS `f_10_1`,
+    SUM(`f_10_2`) AS `f_10_2`,
+    SUM(`f_11_1`) AS `f_11_1`,
+    SUM(`f_11_2`) AS `f_11_2`,
+    SUM(`f_12_1`) AS `f_12_1`,
+    SUM(`f_13_1`) AS `f_13_1`
+FROM
+    shzu.shzu_form
+WHERE
+    form_cp_id = #{cId} AND form_office_id = #{xyId} and form_depart_id !=-1;
+    </select>
+</mapper>
+

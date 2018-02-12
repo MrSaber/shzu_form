@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>测评管理</title>
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.5.3/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.5.3/themes/icon.css"/>
+    <script type="text/javascript" src="../jquery-easyui-1.5.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+</head>
+<body>
+<div id="p" class="easyui-panel" title=""
+     style="width:100%;height:320px;padding:10px;background:#fafafa;"
+     data-options="iconCls:'icon-save'">
+    <form id="fm" method="post" novalidate="novalidate" style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">查看测评成绩</div>
+        <div style="margin-bottom:10px">
+            <div style="margin-bottom: 10px">
+                <label>选择测评</label>
+                <select id="cp"  label="选择测评" name="user_office" style="width:200px;">
+                </select>
+                <!--获得测评-->
+                <script>
+                    /*<![CDATA[*/
+                    $(function () {
+                        $.ajax({
+                            url:"/web/cp/getAll.do",
+                            success:function(data){
+                                for(var i=0;i<data.length;i++)
+                                {
+                                    $('#cp').append("<option value='"+data[i].cp_id+"'>"+data[i].cp_name+"</option>")
+                                }
+                            }
+                        })
+                    })
+                    /*]]>*/
+                </script>
+            </div>
+            <div style="margin-bottom:10px">
+                <input id="weight1" class="easyui-numberbox" label="自评占比:" labelPosition="top" value="0.30" style="width:150px;" data-options="min:0,precision:2"/>
+                <input id="weight2" class="easyui-numberbox" label="专家占比:" labelPosition="top" value="0.30" style="width:150px;" data-options="min:0,precision:2"/>
+                <input id="weight3" class="easyui-numberbox" label="部门占比:" labelPosition="top" value="0.40" style="width:150px;" data-options="min:0,precision:2"/>
+            </div>
+            <div style="margin-bottom: 10px">
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="calcSum()" style="width:80px">计算</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="Export('导出excel', $('#dg'));" style="width:80px">打印</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<table id="dg" class="easyui-datagrid" title="成绩" style="width:100%;height:800px"
+       data-options="singleSelect:true,collapsible:true,url:'/web/cp/getResult.do',method:'get'">
+    <thead>
+    <tr>
+        <th data-options="field:'academy_name',width:80">学院</th>
+        <th data-options="field:'score_self',width:100">自评分</th>
+        <th data-options="field:'score_expert',width:80,align:'right'">考核组打分</th>
+        <th data-options="field:'score_depart',width:80,align:'right'">职能组打分</th>
+        <th data-options="field:'total',width:250">权重得分</th>
+    </tr>
+    </thead>
+</table>
+
+
+<!--获得查询请求参数-->
+<script>
+    /*<![CDATA[*/
+    function getQueryStringArgs(){
+//取得查询字符串并去掉开头的问号
+        var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
+//保存数据的对象
+            args = {},
+//取得每一项
+            items = qs.length ? qs.split("&") : [],
+            item = null,
+            name = null,
+            value = null,
+//在 for 循环中使用
+            i = 0,
+            len = items.length;
+//逐个将每一项添加到 args 对象中
+        for (i=0; i < len; i++){
+            item = items[i].split("=");
+            name = decodeURIComponent(item[0]);
+            value = decodeURIComponent(item[1]);
+            if (name.length) {
+                args[name] = value;
+            }
+        }
+        return args;
+    }
+    /*]]>*/
+</script>
+<script>
+    /*<![CDATA[*/
+    function calcSum() {
+        $('#dg').datagrid("load",{
+            cpId:$('#cp').val()
+        })
+    }
+    $('#dg').datagrid({
+        onLoadSuccess:function () {
+            var weight1 = $('#weight1').val();
+            var weight2 = $('#weight2').val();
+            var weight3 = $('#weight3').val();
+            var rows=$('#dg').datagrid("getRows");
+            for(var i=0;i<rows.length;i++)
+            {
+                $('#dg').datagrid('updateRow',{
+                    index: i,
+                    row: {
+                       total:rows[i].score_self*weight1+rows[i].score_expert*weight2+rows[i].score_depart*weight3
+                    }
+                });
+            }
+        }
+    })
+    /*]]>*/
+</script>
+<script>
+    /*<![CDATA[*/
+    function ChangeToTable(printDatagrid) {
+        var tableString = '<table cellspacing="0" class="pb">';
+        var frozenColumns = printDatagrid.datagrid("options").frozenColumns; // 得到frozenColumns对象
+        var columns = printDatagrid.datagrid("options").columns;  // 得到columns对象
+        var nameList = new Array();
+
+        // 载入title
+        if (typeof columns != 'undefined' && columns != '') {
+            $(columns).each(function (index) {
+                tableString += '\n<tr>';
+                if (typeof frozenColumns != 'undefined' && typeof frozenColumns[index] != 'undefined') {
+                    for (var i = 0; i < frozenColumns[index].length; ++i) {
+                        if (!frozenColumns[index][i].hidden) {
+                            tableString += '\n<th width="' + frozenColumns[index][i].width + '"';
+                            if (typeof frozenColumns[index][i].rowspan != 'undefined' && frozenColumns[index][i].rowspan > 1) {
+                                tableString += ' rowspan="' + frozenColumns[index][i].rowspan + '"';
+                            }
+                            if (typeof frozenColumns[index][i].colspan != 'undefined' && frozenColumns[index][i].colspan > 1) {
+                                tableString += ' colspan="' + frozenColumns[index][i].colspan + '"';
+                            }
+                            if (typeof frozenColumns[index][i].field != 'undefined' && frozenColumns[index][i].field != '') {
+                                nameList.push(frozenColumns[index][i]);
+                            }
+                            tableString += '>' + frozenColumns[0][i].title + '</th>';
+                        }
+                    }
+                }
+                for (var i = 0; i < columns[index].length; ++i) {
+                    if (!columns[index][i].hidden) {
+                        tableString += '\n<th width="' + columns[index][i].width + '"';
+                        if (typeof columns[index][i].rowspan != 'undefined' && columns[index][i].rowspan > 1) {
+                            tableString += ' rowspan="' + columns[index][i].rowspan + '"';
+                        }
+                        if (typeof columns[index][i].colspan != 'undefined' && columns[index][i].colspan > 1) {
+                            tableString += ' colspan="' + columns[index][i].colspan + '"';
+                        }
+                        if (typeof columns[index][i].field != 'undefined' && columns[index][i].field != '') {
+                            nameList.push(columns[index][i]);
+                        }
+                        tableString += '>' + columns[index][i].title + '</th>';
+                    }
+                }
+                tableString += '\n</tr>';
+            });
+        }
+        // 载入内容
+        var rows = printDatagrid.datagrid("getRows"); // 这段代码是获取当前页的所有行
+        for (var i = 0; i < rows.length; ++i) {
+            tableString += '\n<tr>';
+            for (var j = 0; j < nameList.length; ++j) {
+                var e = nameList[j].field.lastIndexOf('_0');
+
+                tableString += '\n<td';
+                if (nameList[j].align != 'undefined' && nameList[j].align != '') {
+                    tableString += ' style="text-align:' + nameList[j].align + ';"';
+                }
+                tableString += '>';
+                if (e + 2 == nameList[j].field.length) {
+                    tableString += rows[i][nameList[j].field.substring(0, e)];
+                }
+                else
+                    tableString += rows[i][nameList[j].field];
+                tableString += '</td>';
+            }
+            tableString += '\n</tr>';
+        }
+        tableString += '\n</table>';
+        return tableString;
+    }
+    function Export(strXlsName, exportGrid) {
+        var f = $('<form action="/web/cp/excel.do" method="post" id="fm1"></form>');
+        var i = $('<input type="hidden" id="txtContent" name="txtContent" />');
+        var l = $('<input type="hidden" id="txtName" name="txtName" />');
+        i.val(ChangeToTable(exportGrid));
+        i.appendTo(f);
+        l.val(strXlsName);
+        l.appendTo(f);
+        f.appendTo(document.body).submit();
+        document.body.removeChild(f);
+    }
+    /*]]>*/
+</script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>权限管理</title>
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.5.3/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.5.3/themes/icon.css"/>
+    <script type="text/javascript" src="../jquery-easyui-1.5.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+</head>
+<body>
+<div id="p" class="easyui-panel" title=""
+     style="width:100%;height:500px;padding:10px;background:#fafafa;"
+     data-options="iconCls:'icon-save'">
+    <form id="fm" method="post" novalidate="novalidate" style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">编写公告</div>
+        <div id="editor"></div>
+        <script type="text/javascript" src="../jquery-easyui-1.5.3/wangEditor.min.js"></script>
+        <script>
+            var E = window.wangEditor;
+            var editor = new E('#editor');
+            editor.create()
+        </script>
+        <div style="margin-bottom:10px">
+            <input name="gg_date" id="bd"  type= "text" class= "easyui-datebox" required ="required" label="发布时间:"> </input>
+        </div>
+        <div style="margin-bottom:10px">
+            <div style="margin-bottom:10px">
+                <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="publishGG()" style="width:90px">查看</a>
+            </div>
+        </div>
+    </form>
+    <script>
+        function publishGG() {
+            $.ajax({
+                url: "/web/admin/addGG.do",
+                data: {
+                    gg_text: editor.txt.html(),
+                    gg_date:$('#bd').val()
+                },
+                success:function (data) {
+                    $.messager.alert("消息",data);
+                }
+            })
+        }
+    </script>
+</div>
+</body>
+</html>

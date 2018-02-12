@@ -1,0 +1,219 @@
+<html style="height: 100%;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta name="generator" content="Aspose.Words for .NET 15.1.0.0">
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="jquery-form.js"></script>
+    <title>附件：</title>
+</head>
+<body style="height: 100%">
+
+
+<div>
+    <p style="line-height:30pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+            style="font-family:方正小标宋简体; font-size:22pt">石河子大学基层党建工作考核考核表</span></p>
+    <div style="text-align: center">
+        <label>选择测评</label>
+        <select id="cp"  label="选择测评" name="user_office" style="width:200px;">
+        </select>
+    </div>
+    <div style="text-align: center">
+        <label>选择学院</label>
+        <select id="cc"  label="选择学院" name="user_office" style="width:200px;">
+            <option value="1">信息学院</option>
+            <option value="2">医学院</option>
+            <option value="3">农学院</option>
+            <option value="5">师范学院</option>
+            <option value="126">政法学院</option>
+            <option value="127">马克思主义学院</option>
+            <option value="128">体育学院</option>
+            <option value="129">文学艺术学院</option>
+            <option value="130">理学院</option>
+            <option value="132">生命科学学院</option>
+            <option value="133">化学化工学院</option>
+            <option value="134">机电学院</option>
+            <option value="135">水建学院</option>
+            <option value="136">食品学院</option>
+            <option value="138">动物科技学院</option>
+            <option value="139">药学院</option>
+            <option value="140">经管学院</option>
+            <option value="141">商学院</option>
+            <option value="142">继续教育学院</option>
+            <option value="143">离退休工作处</option>
+            <option value="144">后勤管理处</option>
+            <option value="145">图书馆(党总支)</option>
+            <option value="146">校医院(党总支)</option>
+            <option value="147">试验场</option>
+            <option value="148">一附院</option>
+            <option value="149">护士学校</option>
+            <option value="150">竞技体校</option>
+            <option value="151">机关党工委</option>
+        </select>
+    </div>
+    <div style="text-align: center">
+        <input type="button" value="提交" onclick="submitAjax()"/>
+        <input type="button" value="历史" onclick="historyAjax()"/>
+    </div>
+    <!--查看历史-->
+    <script>
+        function historyAjax() {
+            var cpId = $('#cp').val();
+            var ccId = $('#cc').val();
+            $.ajax({
+                url:"http://localhost:8080/web/cp/cpget.do",
+                data:{
+                    xyId:ccId,
+                    cpId:cpId,
+                    model:3
+                },
+                success:function (data) {
+                    $("input[type='number']").val(null);
+                    $("#submit").attr("disabled", true);
+                    for (var key in data)
+                    {
+                        var temp= document.getElementsByName(key)[0];
+                        var value=data[key];
+                        $(temp).val(value);
+                    }
+                }
+            })
+        }
+    </script>
+    <!--获得测评-->
+    <script>
+        $(function () {
+            $.ajax({
+                url:"/web/cp/getAll.do",
+                success:function(data){
+                    for(var i=0;i<data.length;i++)
+                    {
+                        $('#cp').append("<option value='"+data[i].cp_id+"'>"+data[i].cp_name+"</option>")
+                    }
+                }
+            })
+        })
+    </script>
+    <!--提交表单-->
+    <script>
+        function submitAjax() {
+            $('#items').ajaxSubmit({
+                url:"/web/depart/add.do",
+                data:{form_office_id:$('#cc').val(), form_cp_id:$('#cp').val()},
+                success:function (data) {
+                    alert(data);
+                }
+            });
+        }
+    </script>
+
+
+    <div style="text-align:center">
+        <form action="/web/form/add.do" method="post" id="items">
+            <table cellspacing="0" cellpadding="0" style="border-collapse:collapse; margin:0 auto">
+                <tbody>
+                <tr>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">一级</span></p>
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">指标</span></p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">二级</span></p>
+                        <p style="line-height:20pt; margin:0pt; orphans:0; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">指标</span></p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">满分值</span></p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">考评内容</span></p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">扣&nbsp; 分&nbsp; 事&nbsp; 项</span></p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">考评分</span></p></td>
+                </tr>
+                <tr style="height:43.55pt">
+                    <td rowspan="8"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:10.5pt; font-weight:bold">二、安全稳定工作情况</span></p>
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:10.5pt; font-weight:bold">(12分)</span></p>
+                    </td>
+                <tr style="height:27.85pt">
+                    <td rowspan="3"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">信息和保密工作</span></p></td>
+                    <td rowspan="3"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">2分</span></p></td>
+                    <td colspan="2" rowspan="3"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">信息网络健全，渠道通畅，报送信息及时准确；严格遵守保密纪律，无失泄密事故发生</span></p>
+                    </td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">安全稳定信息迟报、漏报、瞒报，扣0.5分。</span></p></td>
+                    <td rowspan="3"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <input type="number" name="f_2_3" style="width: 100%"/></td>
+                </tr>
+                <tr style="height:28.05pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">严重违反保密规章制度或发生失泄密事故，扣1分</span></p></td>
+                </tr>
+                <tr style="height:41.35pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">未按文件规定报备工作人员因私出国（境）信息，或出具虚假政审材料、无犯罪记录证明等导致事故，扣0.5分。</span>
+                        </p></td>
+                </tr>
+                <tr style="height:23.5pt">
+                    <td rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">事故处置</span></p></td>
+                    <td rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">4分</span></p></td>
+                    <td colspan="2" rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">能够驾驭复杂形势，妥善处置突发事故，努力维护安定团结的政治局面</span></p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">发生安全稳定事故处置不及时造成不良后果的，扣2分。</span></p></td>
+                    <td rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <input type="number" name="f_2_4" style="width: 100%"/></td>
+                </tr>
+                <tr style="height:42.25pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">配合上级机关及校内相关部门侦查、调查工作不力或泄漏相关工作内容的，扣2分。</span></p>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>学院界面</title>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.3/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.3/themes/icon.css"/>
+    <script type="text/javascript" src="jquery-easyui-1.5.3/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+</head>
+<body>
+<div class="easyui-layout" style="width:100%;height:900px;">
+    <div data-options="region:'north'" style="height:100px;background-color: #d5f5e4">
+        <img src="images/bgTop.png" height="90px"/>
+        <h1 style="float: right" th:text="${session.user.of_name}">
+            （学院界面）
+        </h1>
+        <a style="display:block;top:0;position: absolute;right: 10px;background-color: red;color:white;text-decoration: none" href="/web/logout.do">退出</a>    </div>
+    <div data-options="region:'west',split:true" title="West" style="width:200px;height:100%">
+        <div class="easyui-panel" style="padding:5px;height: 100%">
+            <ul class="easyui-tree" data-options="animate:true,lines:true" id="tt">
+                <li>
+                    <span>功能菜单</span>
+                    <ul>
+                        <li data-options="state:'open'">
+                            <span>填写自评表</span>
+                                <ul  th:each="cp:${cps}">
+                                    <li th:text="${cp.cp_name}" th:id="'form_academy.html?cp='+${cp.cp_id}"></li>
+                                </ul>
+                        </li>
+
+                        <li data-options="state:'open'">
+                            <span>查看自评表</span>
+                            <ul  th:each="cp:${cps}">
+                                <li th:text="${cp.cp_name}" th:id="'show.html?cp='+${cp.cp_id}"></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div data-options="region:'center',title:'考核表',iconCls:'icon-ok'" style="height: 100%">
+        <div class="easyui-panel" style="width: 100%;height: 40px" th:utext="${gg.gg_text}">
+        </div>
+        <iframe id="frame" src="../static/form_academy.html" width="100%" height="100%">
+        </iframe>
+    </div>
+    <script>
+        $('#tt').tree({
+            onClick: function(node){
+                $('#frame').attr("src","/web/"+node.id);
+            }
+        })
+    </script>
+</div>
+</body>
+</html>
+</html>

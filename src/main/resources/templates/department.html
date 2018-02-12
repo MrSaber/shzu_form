@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>职能组界面</title>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.3/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.3/themes/icon.css"/>
+    <script type="text/javascript" src="jquery-easyui-1.5.3/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+</head>
+<body>
+<div class="easyui-layout" style="width:100%;height:900px;">
+    <div data-options="region:'north'" style="height:100px;background-color: #d5f5e4">
+        <img src="images/bgTop.png" height="100px"/>
+        <h1 style="float: right" th:text="${session.user.of_name}">
+            （部门界面）
+        </h1>
+        <a style="display:block;top:0;position: absolute;right: 10px;background-color: red;color:white;text-decoration: none" href="/web/logout.do">退出</a>
+    </div>
+    <div data-options="region:'west',split:true" title="West" style="width:200px;height:100%">
+        <div class="easyui-panel" style="padding:5px;height: 100%">
+            <ul id="tt" class="easyui-tree" data-options="animate:true,lines:true">
+                <li>
+                    <span>功能菜单</span>
+                    <ul>
+                        <li data-options="state:'closed'">
+                            <span>自评表管理</span>
+                            <ul>
+                                <li th:id="${session.user.user_other}">
+                                    <span>填读自评表</span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div data-options="region:'center',title:'考核表',iconCls:'icon-ok'" style="height: 100%">
+        <div class="easyui-panel" style="width: 100%;height: 40px" th:utext="${gg.gg_text}">
+        </div>
+        <iframe  id="frame" th:src="${session.user.user_other}"  width="100%" height="100%" style="border: none">
+        </iframe>
+    </div>
+</div>
+<script>
+    /*<![CDATA[*/
+    $('#tt').tree({
+        onClick: function(node){
+            $('#frame').attr("src",node.id);
+        }
+    });
+    //获得所辖学院
+    /* $(function () {
+         var userId=-1;
+         $.ajax({
+             url:"http://localhost:8080/web/getUserId.do",
+             success:function (userId) {
+                 if(userId=="ERROR")
+                 {alert("获取失败");}
+                 else
+                 {
+                     $.ajax({
+                         url:"http://localhost:8080/web/ex/getAcademys.do",
+                         data:{userId:4},
+                         success:function (data) {
+                             for(var i=0;i<data.length;i++)
+                             {
+                                 $('#academyList').tree('append', {
+                                     parent: $('#academyList'),
+                                     data: [{
+                                         text:data[i].of_name ,
+                                         state: 'closed'
+                                     }]
+                                 });
+                             }
+                         }
+                     })
+                 }
+             }
+         });})*/
+    /*]]>*/
+</script>
+</body>
+</html>

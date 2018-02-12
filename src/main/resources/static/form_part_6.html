@@ -1,0 +1,301 @@
+<html style="height: 100%;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta name="generator" content="Aspose.Words for .NET 15.1.0.0">
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="jquery-form.js"></script>
+    <title>附件：</title></head>
+<body style="height: 100%">
+
+
+<div>
+    <p style="line-height:30pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+            style="font-family:方正小标宋简体; font-size:22pt">石河子大学基层党建工作考核考核表</span></p>
+    <div style="text-align: center">
+        <label>选择测评</label>
+        <select id="cp"  label="选择测评" name="user_office" style="width:200px;">
+        </select>
+    </div>
+    <div style="text-align: center">
+        <label>选择学院</label>
+        <select id="cc"  label="选择学院" name="user_office" style="width:200px;">
+            <option value="1">信息学院</option>
+            <option value="2">医学院</option>
+            <option value="3">农学院</option>
+            <option value="5">师范学院</option>
+            <option value="126">政法学院</option>
+            <option value="127">马克思主义学院</option>
+            <option value="128">体育学院</option>
+            <option value="129">文学艺术学院</option>
+            <option value="130">理学院</option>
+            <option value="132">生命科学学院</option>
+            <option value="133">化学化工学院</option>
+            <option value="134">机电学院</option>
+            <option value="135">水建学院</option>
+            <option value="136">食品学院</option>
+            <option value="138">动物科技学院</option>
+            <option value="139">药学院</option>
+            <option value="140">经管学院</option>
+            <option value="141">商学院</option>
+            <option value="142">继续教育学院</option>
+            <option value="143">离退休工作处</option>
+            <option value="144">后勤管理处</option>
+            <option value="145">图书馆(党总支)</option>
+            <option value="146">校医院(党总支)</option>
+            <option value="147">试验场</option>
+            <option value="148">一附院</option>
+            <option value="149">护士学校</option>
+            <option value="150">竞技体校</option>
+            <option value="151">机关党工委</option>
+        </select>
+    </div>
+    <div style="text-align: center">
+        <input type="button" value="提交" onclick="submitAjax()"/>
+        <input type="button" value="历史" onclick="historyAjax()"/>
+    </div>
+    <!--查看历史-->
+    <script>
+        function historyAjax() {
+            var cpId = $('#cp').val();
+            var ccId = $('#cc').val();
+            $.ajax({
+                url:"http://localhost:8080/web/cp/cpget.do",
+                data:{
+                    xyId:ccId,
+                    cpId:cpId,
+                    model:3
+                },
+                success:function (data) {
+                    $("input[type='number']").val(null);
+                    $("#submit").attr("disabled", true);
+                    for (var key in data)
+                    {
+                        var temp= document.getElementsByName(key)[0];
+                        var value=data[key];
+                        $(temp).val(value);
+                    }
+                }
+            })
+        }
+    </script>
+    <!--获得测评-->
+    <script>
+        $(function () {
+            $.ajax({
+                url:"/web/cp/getAll.do",
+                success:function(data){
+                    for(var i=0;i<data.length;i++)
+                    {
+                        $('#cp').append("<option value='"+data[i].cp_id+"'>"+data[i].cp_name+"</option>")
+                    }
+                }
+            })
+        })
+    </script>
+    <!--提交表单-->
+    <script>
+        function submitAjax() {
+            $('#items').ajaxSubmit({
+                url:"/web/depart/add.do",
+                data:{form_office_id:$('#cc').val(), form_cp_id:$('#cp').val()},
+                success:function (data) {
+                    alert(data);
+                }
+            });
+        }
+    </script>
+    <div style="text-align:center">
+        <form action="/web/form/add.do" method="post" id="items">
+            <table cellspacing="0" cellpadding="0" style="border-collapse:collapse; margin:0 auto">
+                <tbody>
+                <tr>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">一级</span></p>
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">指标</span></p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">二级</span></p>
+                        <p style="line-height:20pt; margin:0pt; orphans:0; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">指标</span></p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">满分值</span></p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">考评内容</span></p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">扣&nbsp; 分&nbsp; 事&nbsp; 项</span></p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">考评分</span></p></td>
+                </tr>
+                <tr style="height:34.55pt">
+                    <td rowspan="8"
+                        style="border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-indent:0pt; widows:0"><span
+                                style="font-family:黑体; font-size:10.5pt; font-weight:bold">6、</span><span
+                                style="font-family:黑体; font-size:10.5pt; font-weight:bold">党风廉政建设和落实“两个责任”情况(10分)</span></p>
+                        <p style="line-height:18pt; margin:0pt; orphans:0; widows:0"><span
+                                style="color:#ff0000; font-family:黑体; font-size:10.5pt; font-weight:bold">&nbsp;</span></p>
+                        <p style="line-height:18pt; margin:0pt; orphans:0; widows:0"><span
+                                style="color:#ff0000; font-family:黑体; font-size:10.5pt; font-weight:bold">&nbsp;</span></p>
+                    </td>
+                    <td rowspan="8"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">党委主体</span></p>
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">责 任</span></p></td>
+                    <td rowspan="4"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; text-indent:10.5pt; widows:0">
+                            <span style="font-family:宋体; font-size:10.5pt; font-weight:bold">4分</span></p></td>
+                    <td colspan="2" rowspan="4"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">党委领导班子对职责范围内的党风廉政建设负集体领导责任，落实党风廉政建设领导体制，研究部署党风廉政建设工作，开展党性党风党纪教育，坚持不懈抓作风建设，健全科学的选人用人机制，强化对权力运行的监督制约，领导和支持纪委依纪依法履行职责</span>
+                        </p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">对党风廉政建设工作重视不够，未认真召开党风廉政建设年度会议，或者部署工作任务不清晰、责任不明确，扣0.5-1分。</span>
+                        </p></td>
+                    <td rowspan="4"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <input type="number" name="f_6_1" style="width: 100%"/></td>
+                </tr>
+                <tr style="height:75.5pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">推动惩治和预防腐败体系建设、廉政风险防控机制建设工作措施不力、实效性差，或党风廉政建设宣传教育活动不能入脑入心，或</span><span
+                                style="font-family:宋体; font-size:10.5pt">改进干部作风、教风学风，师德师风建设等方面制度不健全、制度执行力不够，</span><span
+                                style="font-family:宋体; font-size:10.5pt">扣0.5-1分。</span></p></td>
+                </tr>
+                <tr style="height:58.6pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">对党员干部和职工教育、监督和管理不到位，组织涣散、纪律松弛，问责不力，导致本单位党员或职工发生严重违纪违法行为，扣0.5-1分。</span>
+                        </p></td>
+                </tr>
+                <tr style="height:33.55pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">对学校纪委开展工作不积极支持配合，对本单位纪委工作领导不力、不积极提供必要条件，扣0.5-1分。</span>
+                        </p></td>
+                </tr>
+                <tr style="height:41.85pt">
+                    <td rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">&nbsp;</span></p>
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">2分</span></p></td>
+                    <td colspan="2" rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">党政主要负责人作为职责范围内党风廉政建设第一责任人，领导、组织职责范围内党风廉政建设工作，践行“四个亲自”，抓好上级精神的贯彻落实，率先垂范、严以自律</span>
+                        </p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">落实“四个亲自”要求不够认真，未建立“四个亲自”工作台账，或未向校纪委、校党委组织部提交述责述廉报告扣0.5-1分。</span>
+                        </p></td>
+                    <td rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <input type="number" name="f_6_2" style="width: 100%"/></td>
+                </tr>
+                <tr style="height:39.65pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">不能率先垂范，严以自律，受到诫勉谈话、通报批评等组织处理，扣0.5分；受到纪律处分，扣1分。</span>
+                        </p></td>
+                </tr>
+                <tr style="height:41.65pt">
+                    <td rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">2分</span></p></td>
+                    <td colspan="2" rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">领导班子成员根据工作分工，严格落实“一岗双责”要求，履行职责范围内党风廉政建设的主要领导责任，加强对分管范围内领导干部的教育、监督和管理，以身作则、严以自律</span>
+                        </p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">研究、布置、检查分管范围内的党风廉政建设工作不到位，</span><span
+                                style="font-family:宋体; font-size:10.5pt">或者向分管校领导、校纪委提交述责述廉报告不认真，</span><span
+                                style="font-family:宋体; font-size:10.5pt">扣0.5-1分。</span></p></td>
+                    <td rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <input type="number" name="f_6_3" style="width: 100%"/></td>
+                </tr>
+                <tr style="height:48.3pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">不能以身作则，严以自律，有2人以上受到诫勉谈话、通报批评等组织处理，或者1人受到纪律处分的，扣0.5分；有2人以上受到纪律处分，扣1分。</span>
+                        </p></td>
+                </tr>
+                <tr style="height:42.5pt">
+                    <td rowspan="3"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                    <td rowspan="3"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">纪委监督责任</span></p></td>
+                    <td rowspan="3"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">2分</span></p></td>
+                    <td colspan="2" rowspan="3"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">协助党委加强作风建设和组织协调反腐败工作，认真履行监督执纪问责职责，聚焦主业、深化“三转”，敢于较真、敢于担当，</span><span
+                                style="font-family:宋体; font-size:10.5pt">运用好监督执纪“四种形态”，依规依纪开展纪律审查</span><span
+                                style="font-family:宋体; font-size:10.5pt">，推动构建不敢腐、不能腐、不想腐的有效机制</span></p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">协助党委（直属党总支）抓好党风廉政建设和反腐败工作任务分解不到位，或者对贯彻落实上级重大决策部署及作风建设情况监督检查不力，扣0.5分。</span>
+                        </p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <input type="number" name="f_6_4" style="width: 100%"/></td>
+                </tr>
+
+                <tr style="height:48.3pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">落实监督执纪工作“四种形态”要求不到位，对出现苗头性、倾向性问题的党员、教职工不及时采取约谈、函询、诫勉谈话等组织处理，进行有效预警和提醒，或者未对单位党员和教职员工开展典型案例及纪律警示教育活动，扣1分。</span>
+                        </p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <input type="number" name="f_6_5" style="width: 100%"/></td></td>
+                </tr>
+
+                <tr style="height:48.3pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">落实从严治党要求，依规依纪开展纪律审查、严格执纪问责的工作不力，或者未落实纪律审查工作以上级纪委领导为主的要求，信访线索处置和案件查办未及时向校纪委报告的，扣0.5分。</span>
+                        </p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <input type="number" name="f_6_6" style="width: 100%"/></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

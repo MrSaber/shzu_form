@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>测评管理</title>
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.5.3/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.5.3/themes/icon.css"/>
+    <script type="text/javascript" src="../jquery-easyui-1.5.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+</head>
+<body>
+<div id="p" class="easyui-panel" title=""
+     style="width:100%;height:150px;padding:10px;background:#fafafa;"
+     data-options="iconCls:'icon-save'">
+    <form id="fm" method="post" novalidate="novalidate" style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">查看测评</div>
+        <div style="margin-bottom:10px">
+            <div style="margin-bottom:10px">
+                <select id="cc" class="easyui-combobox" label="选择学院" name="user_office" style="width:200px;">
+                    <option value="1">信息学院</option>
+                    <option value="2">医学院</option>
+                    <option value="3">农学院</option>
+                    <option value="5">师范学院</option>
+                    <option value="126">政法学院</option>
+                    <option value="127">马克思主义学院</option>
+                    <option value="128">体育学院</option>
+                    <option value="129">文学艺术学院</option>
+                    <option value="130">理学院</option>
+                    <option value="132">生命科学学院</option>
+                    <option value="133">化学化工学院</option>
+                    <option value="134">机电学院</option>
+                    <option value="135">水建学院</option>
+                    <option value="136">食品学院</option>
+                    <option value="138">动物科技学院</option>
+                    <option value="139">药学院</option>
+                    <option value="140">经管学院</option>
+                    <option value="141">商学院</option>
+                    <option value="142">继续教育学院</option>
+                    <option value="143">离退休工作处</option>
+                    <option value="144">后勤管理处</option>
+                    <option value="145">图书馆(党总支)</option>
+                    <option value="146">校医院(党总支)</option>
+                    <option value="147">试验场</option>
+                    <option value="148">一附院</option>
+                    <option value="149">护士学校</option>
+                    <option value="150">竞技体校</option>
+                    <option value="151">机关党工委</option>
+                </select>
+                <select id="cc1" class="easyui-combobox" label="选择模式"  style="width:200px;">
+                    <option value="1">学院自评</option>
+                    <option value="2">考核组打分</option>
+                    <option value="3">职能组打分</option>
+                </select>
+                <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="filtrate()" style="width:90px">查看</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="newPage()" style="width:90px">新页面打开</a>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="p1" class="easyui-panel" title=""
+     style="width:100%;height:800px;padding:10px;background:#fafafa;"
+     data-options="iconCls:'icon-save'">
+    <iframe  id="frame" src="" height="100%" width="100%" style="border: none">
+    </iframe>
+</div>
+
+<!--获得查询请求参数-->
+<script>
+    /*<![CDATA[*/
+    function getQueryStringArgs(){
+//取得查询字符串并去掉开头的问号
+        var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
+//保存数据的对象
+            args = {},
+//取得每一项
+            items = qs.length ? qs.split("&") : [],
+            item = null,
+            name = null,
+            value = null,
+//在 for 循环中使用
+            i = 0,
+            len = items.length;
+//逐个将每一项添加到 args 对象中
+        for (i=0; i < len; i++){
+            item = items[i].split("=");
+            name = decodeURIComponent(item[0]);
+            value = decodeURIComponent(item[1]);
+            if (name.length) {
+                args[name] = value;
+            }
+        }
+        return args;
+    }
+    /*]]>*/
+</script>
+<script>
+    /*<![CDATA[*/
+    function filtrate() {
+        var arrs =getQueryStringArgs();
+        var cpId = arrs["cp"];
+        var xyId =$('#cc').val();
+        var model = $('#cc1').val();
+        var url="../cp_academy.html?cpId="+cpId+"&xyId="+xyId+"&model="+model;
+        $('#frame').attr("src",url);
+    }
+    
+    function newPage() {
+        var addr = $('#frame').attr('src');
+        window.open(addr);
+    }
+    /*]]>*/
+</script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>考核组界面</title>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.3/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.3/themes/icon.css"/>
+    <script type="text/javascript" src="jquery-easyui-1.5.3/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+</head>
+<body>
+<div class="easyui-layout" style="width:100%;height:900px;">
+    <div data-options="region:'north'" style="height:100px;background-color: #d5f5e4">
+        <img src="images/bgTop.png" height="100px"/>
+        <h1 style="float: right">
+            （专家界面)
+        </h1>
+        <a style="display:block;top:0;position: absolute;right: 10px;background-color: red;color:white;text-decoration: none" href="/web/logout.do">退出</a>
+    </div>
+    <div data-options="region:'west',split:true" title="West" style="width:200px;height:100%">
+        <div class="easyui-panel" style="padding:5px;height: 100%">
+            <ul class="easyui-tree" data-options="animate:true,lines:true" id="tt">
+                <li>
+                    <span>功能菜单</span>
+                    <ul>
+                        <li>
+                            <span>所辖学院</span>
+                                <ul  th:each="aca:${academy}">
+                                    <li th:text="${aca.of_name}" th:id="${aca.of_id}"></li>
+                                </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div data-options="region:'center',title:'考核表',iconCls:'icon-ok'" style="height: 100%">
+        <div class="easyui-panel" style="width: 100%;height: 40px" th:utext="${gg.gg_text}">
+        </div>
+        <iframe id="frame" src="" width="100%" height="100%">
+        </iframe>
+    </div>
+</div>
+    <script>
+        /*<![CDATA[*/
+        window.userId=-1;
+        window.userOf="";
+        $('#tt').tree({
+            onClick: function(node){
+                userId=node.id;  // 在用户点击的时候提示
+                userOf=node.text;
+                $('#frame').attr("src","form_expert.html?ofId="+userId);
+            }
+        });
+        /*]]>*/
+    </script>
+</body>
+</html>
+</html>

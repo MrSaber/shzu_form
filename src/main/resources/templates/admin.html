@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml" lang="en">
+<html lang="en">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>系统管理员界面</title>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.3/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.3/themes/icon.css"/>
+    <script type="text/javascript" src="jquery-easyui-1.5.3/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+</head>
+<body>
+<div class="easyui-layout" style="width:100%;height:900px;">
+    <div data-options="region:'north'" style="height:100px;background-color: #d5f5e4">
+        <img src="images/bgTop.png" height="100px"/>
+        <h1 style="float: right">
+            （系统管理员)
+        </h1>
+        <a style="display:block;top:0;position: absolute;right: 10px;background-color: red;color:white;text-decoration: none" href="/web/logout.do">退出</a>    </div>
+    <div data-options="region:'west',split:true" title="West" style="width:200px;height:100%">
+        <div class="easyui-panel" style="padding:5px;height: 100%">
+            <ul class="easyui-tree" data-options="animate:true,lines:true" id="tt">
+                <li>
+                    <span>功能菜单</span>
+                    <ul>
+                        <li>
+                            <span>测评管理</span>
+                            <ul>
+                                <li id="admin/privilegeManage.html">开通测评</li>
+                                <li id="admin/ggManage.html">编写公告</li>
+                                <li id="admin/resultManage.html">测评成绩</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>账号管理</span>
+                            <ul>
+                                <li id="admin/exManage.html">专家账号</li>
+                                <li id="admin/uManage.html">学院账号</li>
+                                <li id="admin/dpManage.html">部门账号</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>测评管理</span>
+                            <ul  th:each="cp:${cps}">
+                                <li th:text="${cp.cp_name}" th:id="'admin/cpManage.html?cp='+${cp.cp_id}"></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div data-options="region:'center',title:'考核表',iconCls:'icon-ok'" style="height: 100%">
+        <iframe id="frame" src="" width="100%" height="100%" style="border: none">
+        </iframe>
+    </div>
+</div>
+<script>
+    /*<![CDATA[*/
+    window.userId=-1;
+    window.userOf="";
+    $('#tt').tree({
+        onClick: function(node){
+            $('#frame').attr("src",node.id);
+        }
+    });
+    //获得所辖学院
+    /* $(function () {
+         var userId=-1;
+         $.ajax({
+             url:"http://localhost:8080/web/getUserId.do",
+             success:function (userId) {
+                 if(userId=="ERROR")
+                 {alert("获取失败");}
+                 else
+                 {
+                     $.ajax({
+                         url:"http://localhost:8080/web/ex/getAcademys.do",
+                         data:{userId:4},
+                         success:function (data) {
+                             for(var i=0;i<data.length;i++)
+                             {
+                                 $('#academyList').tree('append', {
+                                     parent: $('#academyList'),
+                                     data: [{
+                                         text:data[i].of_name ,
+                                         state: 'closed'
+                                     }]
+                                 });
+                             }
+                         }
+                     })
+                 }
+             }
+         });})*/
+    /*]]>*/
+</script>
+
+
+</body>
+</html>
+</html>

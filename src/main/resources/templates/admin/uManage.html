@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> </meta>
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.5.3/themes/bootstrap/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../jquery-easyui-1.5.3/themes/icon.css"/>
+    <script type="text/javascript" src="../jquery-easyui-1.5.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+</head>
+<body>
+
+    <table id="dg" title="学院账户信息" style="width:100%;height:500px"
+           toolbar="#toolbar"  idField="id"
+           rownumbers="true" fitColumns="true" singleSelect="true">
+        <thead>
+        <tr>
+            <th field="user_name" width="50" editor="{type:'validatebox',options:{required:true}}">用户名</th>
+            <th field="user_password" width="50" editor="{type:'validatebox',options:{required:true}}">密码</th>
+            <th field="of_name" width="50" editor="{type:'validatebox',options:{required:true}}">学院</th>
+            <th field="user_other" width="50" editor="{type:'validatebox',options:{required:true}}">备注</th>
+        </tr>
+        </thead>
+    </table>
+    <div id="toolbar">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">添加</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="editUser()">修改</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="delUser()">删除</a>
+    </div>
+
+    <div id="dlg" class="easyui-dialog" style="width:400px" closed="true" buttons="#dlg-buttons">
+        <form id="fm" method="post" novalidate="novalidate" style="margin:0;padding:20px 50px">
+            <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">添加学院账号</div>
+            <div style="margin-bottom:10px">
+                <input name="user_name" class="easyui-textbox" required="true" label="用户名:" style="width:100%"/>
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="user_password" class="easyui-textbox" required="true" label="密码：" style="width:100%"/>
+            </div>
+            <div style="margin-bottom:10px">
+                <select id="cc" class="easyui-combobox" label="学院" name="user_office" style="width:200px;">
+                    <option value="1">信息学院</option>
+                    <option value="2">医学院</option>
+                    <option value="3">农学院</option>
+                    <option value="5">师范学院</option>
+                    <option value="126">政法学院</option>
+                    <option value="127">马克思主义学院</option>
+                    <option value="128">体育学院</option>
+                    <option value="129">文学艺术学院</option>
+                    <option value="130">理学院</option>
+                    <option value="132">生命科学学院</option>
+                    <option value="133">化学化工学院</option>
+                    <option value="134">机电学院</option>
+                    <option value="135">水建学院</option>
+                    <option value="136">食品学院</option>
+                    <option value="138">动物科技学院</option>
+                    <option value="139">药学院</option>
+                    <option value="140">经管学院</option>
+                    <option value="141">商学院</option>
+                    <option value="142">继续教育学院</option>
+                    <option value="143">离退休工作处</option>
+                    <option value="144">后勤管理处</option>
+                    <option value="145">图书馆(党总支)</option>
+                    <option value="146">校医院(党总支)</option>
+                    <option value="147">试验场</option>
+                    <option value="148">一附院</option>
+                    <option value="149">护士学校</option>
+                    <option value="150">竞技体校</option>
+                    <option value="151">机关党工委</option>
+                </select>
+            </div>
+            <div style="margin-bottom:10px">
+                <input name="user_other" class="easyui-textbox" required="true" label="备注：" style="width:100%"/>
+            </div>
+        </form>
+        <div id="dlg-buttons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">Save</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancel</a>
+        </div>
+    </div>
+    <!--新建用户-->
+    <script>
+        var url;
+        function newUser(){
+            $('#dlg').dialog('open').dialog('center').dialog('setTitle','New User');
+            $('#fm').form('clear');
+            url = 'http://localhost:8080/web/u/add.do';
+        }
+    </script>
+    <!--修改用户-->
+    <script>
+        function editUser(){
+            var row = $('#dg').datagrid('getSelected');
+            if (row){
+                $('#dlg').dialog('open').dialog('center').dialog('setTitle','Edit User');
+                $('#fm').form('load',row);
+                url = 'http://localhost:8080/web/u/update.do?user_id='+row.user_id;
+            }
+        }
+    </script>
+    <!--删除用户-->
+    <script>
+        function delUser() {
+            var user_id = $('#dg').datagrid('getSelected').user_id;
+            $.ajax({
+                url:"http://localhost:8080/web/u/del.do",
+                data:{userId:user_id},
+                success:function (data) {
+                    $.messager.alert("消息",data);
+                    $('#dlg').dialog('close');        // close the dialog
+                    $('#dg').datagrid('reload');    // reload the user data
+                }
+            })
+        }
+    </script>
+    <!--保存用户-->
+    <script>
+        function saveUser() {
+            $('#fm').form('submit', {
+                url: url,
+                onSubmit: function () {
+                    return $(this).form('validate');
+                },
+                success: function (result) {
+                        $.messager.alert("消息",result);
+                        $('#dlg').dialog('close');        // close the dialog
+                        $('#dg').datagrid('reload');    // reload the user data
+                }
+            })
+        }
+    </script>
+    <script type="text/javascript">
+        $(function(){
+            $('#dg').datagrid({
+                url: 'http://localhost:8080/web/u/getXYS.do'
+            });
+        });
+    </script>
+    <script>
+    </script>
+</body>
+</html>

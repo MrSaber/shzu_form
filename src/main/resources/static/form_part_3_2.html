@@ -1,0 +1,271 @@
+<html style="height: 100%;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta name="generator" content="Aspose.Words for .NET 15.1.0.0">
+    <script src="jquery-3.2.1.min.js"></script>
+    <script src="jquery-form.js"></script>
+    <title>附件：</title></head>
+<body style="height: 100%">
+
+
+<div>
+    <p style="line-height:30pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+            style="font-family:方正小标宋简体; font-size:22pt">石河子大学基层党建工作考核考核表</span></p>
+    <div style="text-align: center">
+        <label>选择测评</label>
+        <select id="cp"  label="选择测评" name="user_office" style="width:200px;">
+        </select>
+    </div>
+    <div style="text-align: center">
+        <label>选择学院</label>
+        <select id="cc"  label="选择学院" name="user_office" style="width:200px;">
+            <option value="1">信息学院</option>
+            <option value="2">医学院</option>
+            <option value="3">农学院</option>
+            <option value="5">师范学院</option>
+            <option value="126">政法学院</option>
+            <option value="127">马克思主义学院</option>
+            <option value="128">体育学院</option>
+            <option value="129">文学艺术学院</option>
+            <option value="130">理学院</option>
+            <option value="132">生命科学学院</option>
+            <option value="133">化学化工学院</option>
+            <option value="134">机电学院</option>
+            <option value="135">水建学院</option>
+            <option value="136">食品学院</option>
+            <option value="138">动物科技学院</option>
+            <option value="139">药学院</option>
+            <option value="140">经管学院</option>
+            <option value="141">商学院</option>
+            <option value="142">继续教育学院</option>
+
+            <option value="149">护士学校</option>
+            <option value="150">竞技体校</option>
+            <option value="151">机关党工委</option>
+        </select>
+    </div>
+    <div style="text-align: center">
+        <input type="button" value="提交" onclick="submitAjax()"/>
+        <input type="button" value="历史" onclick="historyAjax()"/>
+    </div>
+    <!--查看历史-->
+    <script>
+        function historyAjax() {
+            var cpId = $('#cp').val();
+            var ccId = $('#cc').val();
+            $.ajax({
+                url:"http://localhost:8080/web/cp/cpget.do",
+                data:{
+                    xyId:ccId,
+                    cpId:cpId,
+                    model:3
+                },
+                success:function (data) {
+                    $("input[type='number']").val(null);
+                    $("#submit").attr("disabled", true);
+                    for (var key in data)
+                    {
+                        var temp= document.getElementsByName(key)[0];
+                        var value=data[key];
+                        $(temp).val(value);
+                    }
+                }
+            })
+        }
+    </script>
+    <!--获得测评-->
+    <script>
+        $(function () {
+            $.ajax({
+                url:"/web/cp/getAll.do",
+                success:function(data){
+                    for(var i=0;i<data.length;i++)
+                    {
+                        $('#cp').append("<option value='"+data[i].cp_id+"'>"+data[i].cp_name+"</option>")
+                    }
+                }
+            })
+        })
+    </script>
+    <!--提交表单-->
+    <script>
+        function submitAjax() {
+            $('#items').ajaxSubmit({
+                url:"/web/depart/add.do",
+                data:{form_office_id:$('#cc').val(), form_cp_id:$('#cp').val()},
+                success:function (data) {
+                    alert(data);
+                }
+            });
+        }
+    </script>
+    </script>
+    <div style="text-align:center">
+        <form action="/web/form/add.do" method="post" id="items">
+            <table cellspacing="0" cellpadding="0" style="border-collapse:collapse; margin:0 auto">
+                <tbody>
+                <tr>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">一级</span></p>
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">指标</span></p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">二级</span></p>
+                        <p style="line-height:20pt; margin:0pt; orphans:0; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">指标</span></p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">满分值</span></p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">考评内容</span></p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">扣&nbsp; 分&nbsp; 事&nbsp; 项</span></p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:20pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:黑体; font-size:14pt">考评分</span></p></td>
+                </tr>
+                <tr style="height:61.2pt">
+                    <td rowspan="4"
+                        style="border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; text-indent:0pt; widows:0">
+                            <span style="font-family:黑体; font-size:10.5pt; font-weight:bold">3、</span><span
+                                style="font-family:黑体; font-size:10.5pt; font-weight:bold">大学生思想政治教育与教职工思想政治工作情况(12分)</span>
+                        </p></td>
+                    <td rowspan="4"
+                        style="border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">大学生</span></p>
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">思想政治教育</span></p></td>
+                    <td rowspan="4"
+                        style="border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">8分</span></p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">建立健全党委（直属党总支）统一领导、党政齐抓共管、各部门职责明确、互相配合协调的大学生思想政治教育领导体制和工作机制</span>
+                        </p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">对学生思想政治教育未纳入单位发展规划、无专门部署的，学生工作组织机构、管理制度和运行制度不健全的，扣0.5-1分。</span>
+                        </p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <input type="number" name="f_3_1" style="width: 100%"/></td>
+                </tr>
+                <tr style="height:87.8pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">按照“育人为本、德育为先”的要求构建全员育人工作体系，建设一支政治强、业务精、纪律严、作风正的专兼职大学生思想政治教育工作队伍</span>
+                        </p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">未落实学校“多位一体”学生思想政治教育体系、形成全员育人工作局面，辅导员队伍选拔、配备、培养和管理考核工作不力，待遇落实不到位的，扣0.5-1分。</span>
+                        </p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <input type="number" name="f_3_2" style="width: 100%"/></td>
+                </tr>
+                <tr style="height:47.25pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">构建全课程、全过程思想政治教育工作体系，充分发挥课堂教学在思想政治教育中的主渠道作用</span>
+                        </p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">未实现核心价值观教育的课程门类全覆盖、课程运行过程全覆盖，形势政策课组织实施不好，评教成绩不佳的，扣0.5-2分。</span>
+                        </p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <input type="number" name="f_3_3" style="width: 100%"/></td>
+                </tr>
+                <tr style="height:92.1pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">以社会主义核心价值观为主要内容，创新学生思想政治工作模式，努力拓展课堂外大学生思想政治教育的途径，加强思想政治工作的时效性和有效性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                        </p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">未多渠道开展社会主义核心价值观宣传教育及各类主题教育活动的，扣0.5-1分。</span></p>
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">学生全方位综合发展的素质教育理念落实不到位，在学生发展规划指导、创新创业及就业工作组织指导及保障不力的，扣0.5-1分。</span>
+                        </p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <input type="number" name="f_3_4" style="width: 100%"/></td>
+                </tr>
+                <tr style="height:38.4pt">
+                    <td rowspan="3"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:仿宋; font-size:10.5pt">&nbsp;</span></p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">&nbsp;</span></p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">&nbsp;</span></p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">落实依法治校要求，学生日常管理和奖励资助工作科学规范，学生管理基本信息掌握准确，研判干预及时到位，奖励资助工作育人效果显著</span>
+                        </p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">学生日常管理科学化、精细化、规范化落实不够，学生心理危机预防与干预机制落实不好，应急处突及值班工作不到位，发生学生安全管理责任事故的，学生资助奖励工作机制及办法不完善，在实施过程中存在不公开、不公正、不公平情况，资助帮扶工作不到位的，扣0.5-2分。</span>
+                        </p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <input type="number" name="f_3_5" style="width: 100%"/></td>
+                </tr>
+                <tr style="height:43pt">
+                    <td rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">教职工思想政治</span></p>
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">工 作</span></p></td>
+                    <td rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:middle">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:center; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt; font-weight:bold">4分</span></p></td>
+                    <td colspan="2" rowspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">切实加强思想教育引导和师德师风建设，充分发挥党员教职工的示范作用，树立良好的师德师风，做到学高为师、行为示范</span>
+                        </p></td>
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">不重视教职工思想教育，教职工政治学习制度不健全，未能坚持双周一次政治学习的，扣0.5-1分。</span>
+                        </p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <input type="number" name="f_3_6" style="width: 100%"/></td>
+                </tr>
+                <tr style="height:42.15pt">
+                    <td colspan="2"
+                        style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <p style="line-height:18pt; margin:0pt; orphans:0; text-align:justify; widows:0"><span
+                                style="font-family:宋体; font-size:10.5pt">师德师风建设制度不健全，措施不力，对违反师德的行为处理不力，发生一起扣1分，扣完4分止。</span>
+                        </p></td>
+                    <td style="border-bottom-color:#000000; border-bottom-style:solid; border-bottom-width:0.75pt; border-left-color:#000000; border-left-style:solid; border-left-width:0.75pt; border-right-color:#000000; border-right-style:solid; border-right-width:0.75pt; border-top-color:#000000; border-top-style:solid; border-top-width:0.75pt; padding-left:5.03pt; padding-right:5.03pt; vertical-align:top">
+                        <input type="number" name="f_3_7" style="width: 100%"/></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>
