@@ -64,35 +64,6 @@
             $('#frame').attr("src",node.id);
         }
     });
-    //获得所辖学院
-    /* $(function () {
-         var userId=-1;
-         $.ajax({
-             url:"http://localhost:8080/web/getUserId.do",
-             success:function (userId) {
-                 if(userId=="ERROR")
-                 {alert("获取失败");}
-                 else
-                 {
-                     $.ajax({
-                         url:"http://localhost:8080/web/ex/getAcademys.do",
-                         data:{userId:4},
-                         success:function (data) {
-                             for(var i=0;i<data.length;i++)
-                             {
-                                 $('#academyList').tree('append', {
-                                     parent: $('#academyList'),
-                                     data: [{
-                                         text:data[i].of_name ,
-                                         state: 'closed'
-                                     }]
-                                 });
-                             }
-                         }
-                     })
-                 }
-             }
-         });})*/
     /*]]>*/
 </script>
 
